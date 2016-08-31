@@ -1,0 +1,4 @@
+-e git://github.com/nhfruchter/pgh-bustime.git@919478edef9e9bef13a66fa093892358c9702dfa#egg=pgh_bustime
+pytz==2016.6.1
+requests==2.11.1
+xmltodict==0.10.2
