@@ -3,7 +3,8 @@ class Arrival(object):
 
     @classmethod
     def from_prediction(cls, prediction):
-        return cls(prediction.route, prediction.eta - prediction.generated)
+        eta_seconds = (prediction.eta - prediction.generated).total_seconds()
+        return cls(prediction.route, eta_seconds)
 
     def __init__(self, route, eta_seconds):
         self.route = route

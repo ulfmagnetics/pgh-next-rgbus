@@ -1,9 +1,4 @@
-import os
-if os.environ['DEBUG']:
-    from mockapi import BustimeAPI
-else:
-    from pghbustime import BustimeAPI
-from arrival import Arrival
+from pghbustime import Prediction
 
 class Locator(object):
     valid_directions = ['inbound', 'outbound']
@@ -21,7 +16,8 @@ class Locator(object):
         arrivals = []
         for k, v in predictions.items():
             if v['rtdir'].lower() == self.direction:
-                arrival = Arrival.from_prediction(v)
+                prediction = Prediction.fromapi(api, v)
+                arrival = Arrival.from_prediction(prediction)
                 arrivals.append(arrival)
         return arrivals
 
