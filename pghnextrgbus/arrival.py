@@ -1,18 +1,31 @@
+from datetime import datetime
+
 class Arrival(object):
     """ Presents bus arrival info in a ready-to-display manner. """
 
     @classmethod
     def from_prediction(cls, prediction):
-        eta_seconds = (prediction.eta - prediction.generated).total_seconds()
-        return cls(prediction.route, eta_seconds)
+        return cls(prediction.route, prediction.generated, prediction.eta)
 
-    def __init__(self, route, eta_seconds):
+    def __init__(self, route, generated_at, arriving_at):
         self.route = route
-        self.eta_seconds = eta_seconds
+        self.generated_at = generated_at
+        self.arriving_at = arriving_at
 
-    def humanized_eta(self):
-        # TODO '<1 minute', '2 minutes', etc...
-        return "{0} seconds".format(self.eta_seconds)
+    def age(self):
+        """ Returns the timedelta representing the amount of time that has
+            elapsed since this prediction was generated. """
+        return self.current_time() - self.generated_at
 
-    def to_s(self):
-        "Route {0} arrives in {1}".format(self.route, self.humanized_eta())
+    def eta(self):
+        """ Returns the ETA of the arriving bus, based on the initial
+            arrival time and taking into account the age of the prediction. """
+        return self.arriving_at - self.generated_at - self.age()
+
+    def current_time(self):
+        return datetime.datetime.now()
+
+    def __str__(self):
+        return "Route {0}: ETA {1} (arriving at {2}, generated at {3}, age={4})".format(
+            self.route, self.eta(), self.arriving_at, self.generated_at, self.age()
+        )
