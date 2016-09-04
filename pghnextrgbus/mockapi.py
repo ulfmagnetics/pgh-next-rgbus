@@ -1,15 +1,18 @@
 from collections import OrderedDict
+import pytz
 import datetime
 import random
 
 class BustimeAPI(object):
+    STRPTIME = "%Y%m%d %H:%M:%S"
+
     def __init__(self, api_key):
         self.api_key = api_key
 
     def __prediction(self, eta_seconds=None, rt="P1", rtdir="INBOUND", stpid=""):
         if not eta_seconds:
             eta_seconds = random.randint(30, 900)
-        generated_at = datetime.datetime.today()
+        generated_at = datetime.datetime.now(pytz.timezone('US/Eastern'))
         arriving_at  = generated_at + datetime.timedelta(seconds=eta_seconds)
         return OrderedDict([
             (u'tmstmp', generated_at.strftime('%Y%m%d %H:%M:%S')),

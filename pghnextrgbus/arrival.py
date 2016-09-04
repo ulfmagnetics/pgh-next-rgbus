@@ -1,3 +1,4 @@
+import pytz
 from datetime import datetime
 
 class Arrival(object):
@@ -23,7 +24,7 @@ class Arrival(object):
         return self.arriving_at - self.generated_at - self.age()
 
     def current_time(self):
-        return datetime.datetime.now()
+        return datetime.now(pytz.timezone('US/Eastern'))
 
     def __str__(self):
         return "Route {0}: ETA {1} (arriving at {2}, generated at {3}, age={4})".format(

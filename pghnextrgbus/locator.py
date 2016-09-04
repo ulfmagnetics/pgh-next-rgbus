@@ -44,12 +44,11 @@ class Locator(object):
     def predictions(self):
         response = self.api().predictions(stpid=self.stop_id)
         try:
-            print response['prd']
             return response['prd']
         except KeyError:
             return {}
 
     def __arrival_from_raw_prediction(self, prd):
         prediction = Prediction.fromapi(self.api(), prd)
-        arrival = Arrival.from_prediction(prediction)
+        return Arrival.from_prediction(prediction)
 
