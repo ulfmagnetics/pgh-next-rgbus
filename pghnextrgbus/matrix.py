@@ -3,7 +3,7 @@ from datetime import timedelta
 from rgbmatrix import Adafruit_RGBmatrix
 
 class Matrix(object):
-    def __init__(self, rows=16, chain_length=1, font_width='4', font_height='6'):
+    def __init__(self, rows=16, chain_length=1, font_width='5', font_height='8'):
         self.rgbmatrix = Adafruit_RGBmatrix(rows, chain_length)
         self.font_width = int(font_width)
         self.font_height = int(font_height)
@@ -14,7 +14,7 @@ class Matrix(object):
         self.rgbmatrix.Clear()
 
     def render_arrival(self, arrival):
-        #self.debug(arrival)
+        self.debug(arrival)
         eta = arrival.eta()
         if eta < timedelta(minutes=1):
             eta_text = "<1 min!"

@@ -1,4 +1,5 @@
 *.sw[cp]
 *.pyc
 .cache
+src
 
