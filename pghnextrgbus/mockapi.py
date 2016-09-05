@@ -33,11 +33,12 @@ class BustimeAPI(object):
 
     def predictions(self, num=3, stpid=""):
         """ Returns some random predictions for debugging """
+        routes = ['61C','67','61B','P1','T1']
         if num == 1:
-            return OrderedDict({'prd': self.__prediction(stpid=stpid)})
+            return OrderedDict({'prd': self.__prediction(rt=random.choice(routes), stpid=stpid)})
         else:
             prd = []
             for _ in range(num):
-                prd.append(self.__prediction(stpid=stpid))
+                prd.append(self.__prediction(rt=random.choice(routes), stpid=stpid))
             return OrderedDict({'prd': prd})
 

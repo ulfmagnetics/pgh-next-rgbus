@@ -60,10 +60,13 @@ class Matrix(object):
     def urgency_color(self, minutes):
         global URGENCY_COLORS
         if minutes >= URGENCY_COLORS['green']:
+            self.debug("{0} minutes -- green".format(minutes))
             return 0x00ff00
-        elif minutes >= URGENCY_COLORS['yellow']:
+        elif minutes >= URGENCY_COLORS['yellow'] and minutes < URGENCY_COLORS['green']:
+            self.debug("{0} minutes -- yellow".format(minutes))
             return 0xffff00
         else:
+            self.debug("{0} minutes -- red".format(minutes))
             return 0xff0000
 
     def debug(self, msg):
