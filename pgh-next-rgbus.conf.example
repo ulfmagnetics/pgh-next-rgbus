@@ -1,0 +1,21 @@
+# Customize this file and copy it to /etc/init/pgh-next-rgbus.conf to start on boot.
+# See README.md for more details.
+description "Launch the pgh-next-rgbus matrix display app"
+author "John Berry - ulfmagnetics@gmail.com"
+
+start on (net-device-up IFACE=wlan0 and runlevel [2345])
+stop on runlevel [16]
+
+respawn
+respawn limit 10 90
+
+script
+  export HOME="/home/pi"
+  export DEBUG=true
+  export STOP_ID=<STOP_ID>
+  export DIRECTION=<DIRECTION>
+  export API_KEY=<API_LEY>
+  export POLL_INTERVAL=30
+  chdir <YOUR APPLICATION INSTALL DIR>
+  exec python run.py
+end script
