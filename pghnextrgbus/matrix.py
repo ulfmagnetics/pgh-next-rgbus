@@ -3,6 +3,7 @@ from datetime import timedelta
 from rgbmatrix import Adafruit_RGBmatrix
 import threading
 import time
+import utils
 
 # TODO these should be exposed as config variables
 URGENCY_COLORS = {'green': 15, 'yellow': 10, 'red': 5}
@@ -22,9 +23,14 @@ class Renderer(threading.Thread):
 
     def run(self):
         while True:
-            for arrival in self._arrivals:
+            if len(self._arrivals) > 0:
+                for arrival in self._arrivals:
+                    self.matrix.clear()
+                    self.matrix.render_arrival(arrival)
+                    time.sleep(self.delay)
+            else:
                 self.matrix.clear()
-                self.matrix.render_arrival(arrival)
+                self.matrix.render_no_arrivals()
                 time.sleep(self.delay)
 
 class Matrix(object):
@@ -35,11 +41,11 @@ class Matrix(object):
         self.bdf_font_file = "fonts/{0}x{1}.bdf".format(font_width, font_height)
 
     def clear(self):
-        self.debug("Matrix cleared")
+        utils.debug("Matrix cleared")
         self.rgbmatrix.Clear()
 
     def render_arrival(self, arrival):
-        self.debug(arrival)
+        utils.debug(arrival)
         eta = arrival.eta()
         if eta < timedelta(minutes=1):
             minutes = 1
@@ -49,6 +55,10 @@ class Matrix(object):
             eta_text = "{0} min".format(minutes)
         self.render_line(1, arrival.route, 0xff00ff)
         self.render_line(2, eta_text, self.urgency_color(minutes))
+
+    def render_no_arrivals(self):
+        self.render_line(1, "No :(", 0xff00ff)
+        self.render_line(2, "Buses", 0xff00ff)
 
     def render_line(self, line_num, text, rgb):
         y_offset = (line_num - 1) * self.font_height
@@ -60,16 +70,12 @@ class Matrix(object):
     def urgency_color(self, minutes):
         global URGENCY_COLORS
         if minutes >= URGENCY_COLORS['green']:
-            self.debug("{0} minutes -- green".format(minutes))
+            utils.debug("{0} minutes -- green".format(minutes))
             return 0x00ff00
         elif minutes >= URGENCY_COLORS['yellow'] and minutes < URGENCY_COLORS['green']:
-            self.debug("{0} minutes -- yellow".format(minutes))
+            utils.debug("{0} minutes -- yellow".format(minutes))
             return 0xffff00
         else:
-            self.debug("{0} minutes -- red".format(minutes))
+            utils.debug("{0} minutes -- red".format(minutes))
             return 0xff0000
-
-    def debug(self, msg):
-        if env('DEBUG', default=False, cast=bool):
-            print msg
 

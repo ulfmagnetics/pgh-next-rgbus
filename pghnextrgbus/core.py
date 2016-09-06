@@ -19,6 +19,7 @@ def sigint_handler(signal, frame):
 def main(args):
     global matrix, renderer
     poll_interval = env('POLL_INTERVAL', default=30, cast=int)
+    display_delay = env('DISPLAY_DELAY', default=8, cast=int)
     api_key       = env('API_KEY')
     stop_id       = env('STOP_ID')
     direction     = env('DIRECTION')
@@ -29,7 +30,7 @@ def main(args):
     locator = Locator(api_key=api_key, stop_id=stop_id, direction=direction)
     signal.signal(signal.SIGINT, sigint_handler)
 
-    renderer = Renderer(matrix)
+    renderer = Renderer(matrix, delay=display_delay)
     renderer.daemon = True
     while True:
         renderer.arrivals = locator.next_arrivals()
