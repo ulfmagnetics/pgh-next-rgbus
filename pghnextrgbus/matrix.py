@@ -1,6 +1,6 @@
 from envparse import env
 from datetime import timedelta
-from rgbmatrix import Adafruit_RGBmatrix
+from rgbmatrix import RGBMatrix, graphics
 import threading
 import time
 import utils
@@ -35,14 +35,16 @@ class Renderer(threading.Thread):
 
 class Matrix(object):
     def __init__(self, rows=16, chain_length=1, font_width='5', font_height='8'):
-        self.rgbmatrix = Adafruit_RGBmatrix(rows, chain_length)
+        self.rgbmatrix = RGBMatrix(rows, chain_length)
         self.font_width = int(font_width)
         self.font_height = int(font_height)
-        self.bdf_font_file = "fonts/{0}x{1}.bdf".format(font_width, font_height)
+        self.font = graphics.Font()
+        self.font.LoadFont("fonts/{0}x{1}.bdf".format(font_width, font_height))
+        self.canvas = self.rgbmatrix.CreateFrameCanvas()
 
     def clear(self):
         utils.debug("Matrix cleared")
-        self.rgbmatrix.Clear()
+        self.canvas.Clear()
 
     def render_arrival(self, arrival):
         utils.debug(arrival)
@@ -55,17 +57,20 @@ class Matrix(object):
             eta_text = "{0} min".format(minutes)
         self.render_line(1, arrival.route, 0xff00ff)
         self.render_line(2, eta_text, self.urgency_color(minutes))
+        self.canvas = self.rgbmatrix.SwapOnVSync(self.canvas)
 
     def render_no_arrivals(self):
         self.render_line(1, "No :(", 0xff00ff)
         self.render_line(2, "Buses", 0xff00ff)
+        self.canvas = self.rgbmatrix.SwapOnVSync(self.canvas)
 
     def render_line(self, line_num, text, rgb):
-        y_offset = (line_num - 1) * self.font_height
+        y_offset = (line_num - 0) * self.font_height - 1
         r = (rgb >> 16) & 0xff
         g = (rgb >>  8) & 0xff
         b = (rgb >>  0) & 0xff
-        self.rgbmatrix.DrawText(self.bdf_font_file, 1, y_offset, r, g, b, text)
+        text_color = graphics.Color(r, g, b)
+        graphics.DrawText(self.canvas, self.font, 1, y_offset, text_color, text)
 
     def urgency_color(self, minutes):
         global URGENCY_COLORS
