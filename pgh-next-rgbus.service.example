@@ -1,0 +1,14 @@
+# Customize this file and copy to /etc/systemd/system/pgh-next-rgbus.service
+[Unit]
+Description=pgh-next-rgbus
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/python run.py
+WorkingDirectory=/home/pi/src/pgh-next-rgbus
+Environment=STOP_ID=xxxx DIRECTION=inbound API_KEY=deadbeef12345678 POLL_INTERVAL=30 DEBUG=true
+
+[Install]
+WantedBy=multi-user.target
