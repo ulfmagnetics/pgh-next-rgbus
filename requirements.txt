@@ -10,3 +10,4 @@ pytz==2016.6.1
 requests==2.20.0
 six==1.10.0
 xmltodict==0.10.2
+rgbmatrix==0.0.1
