@@ -1,13 +1,16 @@
+from __future__ import print_function
+from __future__ import absolute_import
+from builtins import object
 import os
 if 'MOCKAPI' in os.environ and os.environ['MOCKAPI']:
-    print "--- MOCK API ---"
-    from mockapi import BustimeAPI
+    print("--- MOCK API ---")
+    from .mockapi import BustimeAPI
 else:
     from pghbustime import BustimeAPI
 from pghbustime import Prediction, BustimeError
-from arrival import Arrival
+from .arrival import Arrival
 from collections import OrderedDict
-import utils
+from . import utils
 
 class Locator(object):
     valid_directions = ['inbound', 'outbound']
@@ -29,7 +32,7 @@ class Locator(object):
         try:
             prd = self.predictions()
         except BustimeError as err:
-            print "Caught BustimeError: {0}".format(err)
+            print("Caught BustimeError: {0}".format(err))
             prd = []
         utils.debug(prd)
 

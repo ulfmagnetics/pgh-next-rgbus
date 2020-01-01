@@ -1,6 +1,7 @@
+from __future__ import absolute_import
 from envparse import env
-from locator import Locator
-from matrix import Renderer, Matrix
+from .locator import Locator
+from .matrix import Renderer, Matrix
 import time
 import signal
 import sys
