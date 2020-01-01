@@ -1,5 +1,6 @@
 from __future__ import print_function
 from __future__ import absolute_import
+from builtins import object
 import os
 if 'MOCKAPI' in os.environ and os.environ['MOCKAPI']:
     print("--- MOCK API ---")

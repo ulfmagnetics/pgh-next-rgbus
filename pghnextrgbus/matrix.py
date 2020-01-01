@@ -1,4 +1,7 @@
 from __future__ import absolute_import
+from __future__ import division
+from builtins import object
+from past.utils import old_div
 from envparse import env
 from datetime import timedelta
 from rgbmatrix import RGBMatrix, graphics
@@ -54,7 +57,7 @@ class Matrix(object):
             minutes = 1
             eta_text = "<1 min!"
         else:
-            minutes = eta.seconds / 60
+            minutes = old_div(eta.seconds, 60)
             eta_text = "{0} min".format(minutes)
         self.render_line(1, arrival.route, 0xff00ff)
         self.render_line(2, eta_text, self.urgency_color(minutes))
