@@ -6,7 +6,7 @@ After=network.target
 [Service]
 Type=simple
 Restart=always
-ExecStart=/usr/bin/python run.py
+ExecStart=/usr/bin/python3 run.py
 WorkingDirectory=/home/pi/src/pgh-next-rgbus
 Environment=STOP_ID=xxxx DIRECTION=inbound API_KEY=deadbeef12345678 POLL_INTERVAL=30 DEBUG=true
 
