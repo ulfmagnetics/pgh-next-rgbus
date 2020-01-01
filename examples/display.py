@@ -1,11 +1,12 @@
 #!/usr/bin/python
 
+from __future__ import print_function
 import os, sys
 from os import getuid
 from time import sleep
 
 if (getuid() != 0):
-  print "This script must be run as root!"
+  print("This script must be run as root!")
   sys.exit(1)
 
 sys.path.append('lib')

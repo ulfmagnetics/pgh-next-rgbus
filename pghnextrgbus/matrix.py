@@ -1,9 +1,10 @@
+from __future__ import absolute_import
 from envparse import env
 from datetime import timedelta
 from rgbmatrix import RGBMatrix, graphics
 import threading
 import time
-import utils
+from . import utils
 
 # TODO these should be exposed as config variables
 URGENCY_COLORS = {'green': 15, 'yellow': 10, 'red': 5}
