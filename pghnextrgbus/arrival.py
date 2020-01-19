@@ -31,3 +31,15 @@ class Arrival(object):
         return "Route {0}: ETA {1} (arriving at {2}, generated at {3}, age={4})".format(
             self.route, self.eta(), self.arriving_at, self.generated_at, self.age()
         )
+
+    @property
+    def route(self):
+        return self.route
+
+    @property
+    def generated_at(self):
+        return self.generated_at
+
+    @property
+    def arriving_at(self):
+        return self.arriving_at

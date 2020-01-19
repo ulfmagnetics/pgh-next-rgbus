@@ -17,24 +17,26 @@ def sigint_handler(signal, frame):
         renderer.join(1.0)
     sys.exit(0)
 
+def parse_stop_ids(stop_ids):
+    return [id_and_dir.split('/') for id_and_dir in stop_ids.split(',')]
+
 def main(args):
     global matrix, renderer
     poll_interval = env('POLL_INTERVAL', default=30, cast=int)
     display_delay = env('DISPLAY_DELAY', default=8, cast=int)
     api_key       = env('API_KEY')
-    stop_id       = env('STOP_ID')
-    direction     = env('DIRECTION')
+    stop_ids      = env('STOP_IDS') # using format: 7637/inbound,8475/outbound
     matrix_rows   = env('MATRIX_ROWS', default=16, cast=int)
     matrix_chain_length = env('MATRIX_CHAIN_LENGTH', default=1, cast=int)
 
     matrix = Matrix(rows=matrix_rows, chain_length=matrix_chain_length)
-    locator = Locator(api_key=api_key, stop_id=stop_id, direction=direction)
+    locators = [Locator(api_key=api_key, stop_id=sid, direction=dir) for (sid,dir) in parse_stop_ids(stop_ids)]
+
     signal.signal(signal.SIGINT, sigint_handler)
 
-    renderer = Renderer(matrix, delay=display_delay)
+    renderer = Renderer(matrix, locators, delay=display_delay)
     renderer.daemon = True
     while True:
-        renderer.arrivals = locator.next_arrivals()
         if not renderer.is_alive():
             renderer.start()
         time.sleep(poll_interval)

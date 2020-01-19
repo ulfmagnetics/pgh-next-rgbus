@@ -3,6 +3,7 @@ from __future__ import division
 from builtins import object
 from past.utils import old_div
 from envparse import env
+from itertools import chain
 from datetime import timedelta
 from rgbmatrix import RGBMatrix, graphics
 import threading
@@ -13,22 +14,21 @@ from . import utils
 URGENCY_COLORS = {'green': 15, 'yellow': 10, 'red': 5}
 
 class Renderer(threading.Thread):
-    def __init__(self, matrix, delay=5):
+    def __init__(self, matrix, locators, delay=5):
         super(Renderer, self).__init__()
         self.matrix = matrix
+        self.locators = locators
         self.delay = delay
-        self._arrivals = []
 
-    @property
-    def arrivals(self): return self._arrivals
-
-    @arrivals.setter
-    def arrivals(self, value): self._arrivals = value
+    def arrivals_to_render(self):
+        arrivals = chain(map(lambda locator: locator.next_arrivals(), self.locators))
+        return sorted(arrivals, key=arrival.route)
 
     def run(self):
         while True:
-            if len(self._arrivals) > 0:
-                for arrival in self._arrivals:
+            arrivals = arrivals_to_render()
+            if len(arrivals) > 0:
+                for arrival in arrivals:
                     self.matrix.clear()
                     self.matrix.render_arrival(arrival)
                     time.sleep(self.delay)
