@@ -26,7 +26,7 @@ class Renderer(threading.Thread):
 
     def run(self):
         while True:
-            arrivals = arrivals_to_render()
+            arrivals = self.arrivals_to_render()
             if len(arrivals) > 0:
                 for arrival in arrivals:
                     self.matrix.clear()
