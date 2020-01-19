@@ -10,9 +10,9 @@ class Arrival(object):
         return cls(prediction.route, prediction.generated, prediction.eta)
 
     def __init__(self, route, generated_at, arriving_at):
-        self.route = route
-        self.generated_at = generated_at
-        self.arriving_at = arriving_at
+        self._route = route
+        self._generated_at = generated_at
+        self._arriving_at = arriving_at
 
     def age(self):
         """ Returns the timedelta representing the amount of time that has
@@ -34,12 +34,12 @@ class Arrival(object):
 
     @property
     def route(self):
-        return self.route
+        return self._route
 
     @property
     def generated_at(self):
-        return self.generated_at
+        return self._generated_at
 
     @property
     def arriving_at(self):
-        return self.arriving_at
+        return self._arriving_at
