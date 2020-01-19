@@ -22,7 +22,7 @@ class Renderer(threading.Thread):
 
     def arrivals_to_render(self):
         arrivals = chain(map(lambda locator: locator.next_arrivals(), self.locators))
-        return sorted(arrivals, key=arrival.route)
+        return sorted(arrivals, key=lambda arrival: arrival.route)
 
     def run(self):
         while True:
