@@ -21,7 +21,10 @@ class Renderer(threading.Thread):
         self.delay = delay
 
     def arrivals_to_render(self):
-        arrivals = chain(map(lambda locator: locator.next_arrivals(), self.locators))
+        arrivals = []
+        for locator in self.locators:
+            for arrival in locator.next_arrivals():
+                arrivals.append(arrival)
         return sorted(arrivals, key=lambda arrival: arrival.route)
 
     def run(self):
