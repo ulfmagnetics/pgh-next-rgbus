@@ -4,7 +4,7 @@ This is a simple Python application intended to pull the next arrival times of P
 (formerly Pittsburgh Port Authority) buses at a particular stop, and display the number of minutes remaining until arrival on an RGB matrix.
 Perfect for the busy professional who needs to know exactly when they need to get out the door!!
 
-![An image of a working installation of pgh-next-rgbus, running in a lovely wooden box with an LED RGB display that says "74 20 min"](https://uc1e8406ee88f55792522d981801.dl.dropboxusercontent.com/cd/0/inline/Br65AWJfV42io0ix4et-PR-ejiqFAQpmGH4AJDrr4s36cmsyUz_5D-__yb2tuLxjkFxYf-0s42A1qnMX9XQSY5rC6mWUxQc3qZiOQMSyUoZ8mHq_2vc-aCQY0qK3Gj2C0B8o5hmGiRqwEyAkmRXp4SmGRkQhi5-stbXyGdHv12vOmw/file#)
+![An image of a working installation of pgh-next-rgbus, running in a lovely wooden box with an LED RGB display that says "74 20 min"](https://uc1e8406ee88f55792522d981801.dl.dropboxusercontent.com/cd/0/inline/Br65AWJfV42io0ix4et-PR-ejiqFAQpmGH4AJDrr4s36cmsyUz_5D-__yb2tuLxjkFxYf-0s42A1qnMX9XQSY5rC6mWUxQc3qZiOQMSyUoZ8mHq_2vc-aCQY0qK3Gj2C0B8o5hmGiRqwEyAkmRXp4SmGRkQhi5-stbXyGdHv12vOmw/file# | width=600)
 
 This application is based on the great work over at Adafruit and is compatible with the HUB75-based
 RGB matrices that they sell. This project uses a prebuilt version of the `rgbmatrix.so` library with
