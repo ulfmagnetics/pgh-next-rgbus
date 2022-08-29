@@ -2,7 +2,7 @@ envparse==0.2.0
 funcsigs==1.0.2
 mock==2.0.0
 pbr==1.10.0
--e git://github.com/ulfmagnetics/pgh-bustime.git@539949b0b9716f4cc0a62983b065f71a484b79e6#egg=pgh_bustime
+-e git://github.com/ulfmagnetics/pgh-bustime.git@6a4fdcd6b3dc2646c25a79acc5c90fc1310dedab#egg=pgh_bustime
 py==1.10.0
 pytest==3.0.2
 pytest-mock==1.2
@@ -10,5 +10,5 @@ pytz==2016.6.1
 requests==2.20.0
 six==1.10.0
 xmltodict==0.10.2
-rgbmatrix==0.0.1
+../rpi-rgb-led-matrix/bindings/python/
 future
