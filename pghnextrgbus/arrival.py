@@ -1,3 +1,4 @@
+from builtins import object
 import pytz
 from datetime import datetime
 
@@ -9,9 +10,9 @@ class Arrival(object):
         return cls(prediction.route, prediction.generated, prediction.eta)
 
     def __init__(self, route, generated_at, arriving_at):
-        self.route = route
-        self.generated_at = generated_at
-        self.arriving_at = arriving_at
+        self._route = route
+        self._generated_at = generated_at
+        self._arriving_at = arriving_at
 
     def age(self):
         """ Returns the timedelta representing the amount of time that has
@@ -30,3 +31,15 @@ class Arrival(object):
         return "Route {0}: ETA {1} (arriving at {2}, generated at {3}, age={4})".format(
             self.route, self.eta(), self.arriving_at, self.generated_at, self.age()
         )
+
+    @property
+    def route(self):
+        return self._route
+
+    @property
+    def generated_at(self):
+        return self._generated_at
+
+    @property
+    def arriving_at(self):
+        return self._arriving_at
