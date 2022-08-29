@@ -32,6 +32,7 @@ git clone https://github.com/hzeller/rpi-rgb-led-matrix
 
 ```
 pip3 install -r requirements.txt
+```
 
 ## Start on boot
 
