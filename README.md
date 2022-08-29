@@ -18,6 +18,21 @@ to the Port Authority's Bustime API. To use the API, you'll need to request an A
 This app has only been tested on a Raspberry Pi 3 with a 32x16 RGB matrix. Let me know if you get it working
 on another platform!
 
+## Installation
+
+* Clone this repo into a directory of your choice, e.g. `/home/pi/src/`
+* Clone the repo that contains the `rgbmatrix` library into the same directory as you cloned this repo:
+
+```
+cd /home/pi/src
+git clone https://github.com/hzeller/rpi-rgb-led-matrix
+```
+
+* Install the required packages:
+
+```
+pip3 install -r requirements.txt
+
 ## Start on boot
 
 1. Install upstart with `sudo apt-get install upstart`
